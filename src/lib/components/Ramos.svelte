@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { selectedCourse } from '$lib';
 	import type { Course } from '$lib/types';
 	import RatingBadge from './RatingBadge.svelte';
 	export let courses: Course[] = [];
 </script>
 
 <span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
-<div class="flex w-full mx-auto gap-12 justify-center mt-8">
+<div class="mx-auto mt-8 flex w-full justify-center gap-12">
 	<button
 		class="btn btn-warning w-32"
 		on:click={() => {
@@ -26,21 +27,25 @@
 
 <div class="flex flex-wrap justify-center gap-12 p-12">
 	{#each courses.slice(0, 100) as item}
-		<button
-			class="flex flex-col w-80 h-32 justify-between items-center bg-primary text-primary-content p-4 rounded-xl hover:bg-primary/75 active:scale-95 transition-transform"
+		<a
+			href={'/' + item.id}
+			on:click={() => {
+				selectedCourse.set(item);
+			}}
+			class="flex h-32 w-80 flex-col items-center justify-between rounded-xl bg-primary p-4 text-primary-content transition-transform hover:bg-primary/75 active:scale-95"
 		>
 			<div class="flex items-center gap-2 font-semibold">
-				<span class="iconify mingcute--comment-line size-6"></span>
+				<span class="iconify size-6 mingcute--comment-line"></span>
 				<p>
-					{item.id}
+					{item.vote_count}
 				</p>
 			</div>
 			<p class="font-bold">{item.name}</p>
 
-			<div class="grid grid-cols-2 grid-rows-1 text-lg font-semibold gap-4">
+			<div class="grid grid-cols-2 grid-rows-1 gap-4 text-lg font-semibold">
 				<RatingBadge icon="mingcute--skull-fill" value={item.difficulty_mean} />
 				<RatingBadge icon="mingcute--time-fill" value={item.time_demand_mean} />
 			</div>
-		</button>
+		</a>
 	{/each}
 </div>

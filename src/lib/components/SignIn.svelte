@@ -17,10 +17,15 @@
 		<span>
 			<small>Signed in as</small><br />
 			<strong>{$page.data.session.user?.name ?? 'User'}</strong>
+			<img
+				class="size-4"
+				src={$page.data.session?.user?.image ?? 'https://source.boringavatars.com/marble/120/'}
+				alt="User Avatar"
+			/>
 		</span>
 		<span>Sign out</span>
 	{:else}
 		<span>You are not signed in</span>
-		<span> Sign In with Google </span><span class="iconify mingcute--google-fill size-6"></span>
+		<span> Sign In with Google </span><span class="iconify size-6 mingcute--google-fill"></span>
 	{/if}
 </button>

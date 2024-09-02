@@ -1,5 +1,6 @@
-export const load = async (event) => {
+export const load = async ({ locals, cookies }) => {
 	return {
-		session: await event.locals.auth()
+		session: await locals.auth(),
+		token: cookies.get('authjs.session-token')
 	};
 };

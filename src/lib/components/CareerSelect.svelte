@@ -6,9 +6,15 @@
 	export let getCourses = () => {};
 </script>
 
-<select class="select select-primary" name="career" id="career" bind:value={selectedCareer} on:change={getCourses}>
+<select
+	class="select select-primary"
+	name="career"
+	id="career"
+	bind:value={selectedCareer}
+	on:change={getCourses}
+>
 	<option value="" disabled>Selecciona tu carrera</option>
 	{#each careers as career}
-		<option value={career.id}>{career.name}</option>
+		<option value={career.id}>{career.id} - {career.name}</option>
 	{/each}
 </select>

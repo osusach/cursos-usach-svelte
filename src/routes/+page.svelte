@@ -10,11 +10,11 @@
 
 	export let data: PageData;
 
+	let courses = data.courses;
 	let search = '';
 	let selectedFaculty: string = '';
 	let selectedCareer: string = '';
 	let careers: any = [];
-	let userLoggedIn = false;
 
 	const getCareers = async () => {
 		careers = await fetch(
@@ -34,23 +34,25 @@
 			});
 	};
 
+	$: {
+		courses = data.courses.filter((item) => item.name.toLowerCase().includes(search));
+	}
 </script>
 
-
-<header class="grid grid-cols-5 grid-rows-1 items-center gap-4 p-4">
+<header class="mx-12 my-4 grid grid-cols-5 grid-rows-1 items-center gap-4">
 	<h1 class="btn btn-primary">CursosUSACH</h1>
 	<input
 		bind:value={search}
 		type="text"
 		placeholder="Buscar..."
-		class="input col-span-2 input-primary"
+		class="input input-primary col-span-2"
 	/>
 	<SignIn />
 </header>
 <main>
-	<div class="grid grid-cols-2 grid-rows-1 gap-4 mx-12">
+	<div class="mx-12 grid grid-cols-2 grid-rows-1 gap-4">
 		<FacultySelect faculties={data.faculties} bind:selectedFaculty {getCareers} />
 		<CareerSelect {careers} bind:selectedCareer {getCourses} />
 	</div>
-	<Ramos courses={data.courses} />
+	<Ramos {courses} />
 </main>

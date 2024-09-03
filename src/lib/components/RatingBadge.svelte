@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="inline-flex items-center gap-1 px-2 py-1 rounded-badge"
+	class="inline-flex items-center gap-1 rounded-badge px-2 py-1"
 	class:bg-error={value > 4}
 	class:bg-warning={4 >= value && value > 2}
 	class:bg-info={2 >= value}

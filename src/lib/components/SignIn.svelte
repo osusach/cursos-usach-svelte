@@ -13,18 +13,16 @@
 			signOut();
 		}}
 	>
-		<span class="inline-flex font-semibold gap-4">
+		<span class="inline-flex gap-4 font-semibold">
 			<img
-				class="size-7 mask mask-squircle"
+				class="mask mask-squircle size-7"
 				src={data.session?.user?.image ?? '/logo_transparent.png'}
 				alt="User Avatar"
 			/>
 			<p>{data.session.user?.name ?? 'Usuario'}</p>
 		</span>
-		<span class="divider divider-horizontal divider-neutral my-2"></span>
-		<p>
-			Salir
-		</p>
+		<span class="divider divider-neutral divider-horizontal my-2"></span>
+		<p>Salir</p>
 	</button>
 {:else}
 	<button

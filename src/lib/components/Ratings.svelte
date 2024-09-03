@@ -4,7 +4,7 @@
 	export let data: any = [];
 	export let type: 'difficulty' | 'time';
 	export let total;
-	
+
 	let values = data.scores;
 	let mean: number = data.average;
 	let isType = type == 'time';

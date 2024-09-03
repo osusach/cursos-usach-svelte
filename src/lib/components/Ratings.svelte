@@ -8,6 +8,7 @@
 	let values = data.scores;
 	let mean: number = data.average;
 	let isType = type == 'time';
+	if (total == 0) total = 1;
 </script>
 
 <div
@@ -31,7 +32,7 @@
 					</p>
 					<progress
 						class="progress progress-secondary h-6 w-full bg-base-content/45 shadow-inner shadow-primary-content/50"
-						value={(100 * value.votes) / total}
+						value={Math.round((100 * value.votes) / total)}
 						max="100"
 					></progress>
 				</div>

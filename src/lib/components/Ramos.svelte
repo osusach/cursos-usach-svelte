@@ -28,7 +28,7 @@
 </div>
 
 <div class="flex flex-wrap justify-center gap-12 p-12">
-	{#each courses as item}
+	{#each courses.slice(page, page + 50) as item}
 		<a
 			href={'/' + item.id}
 			on:click={() => {

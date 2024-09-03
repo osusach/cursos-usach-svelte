@@ -3,10 +3,12 @@
 	import type { Course } from '$lib/types';
 	import RatingBadge from './RatingBadge.svelte';
 	export let courses: Course[] = [];
+	let page = 0;
 </script>
 
 <span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
-<div class="mx-auto mt-8 flex w-full justify-center gap-12">
+
+<div class="mx-auto mt-8 grid grid-flow-col justify-center gap-12">
 	<button
 		class="btn btn-warning w-32"
 		on:click={() => {
@@ -26,13 +28,13 @@
 </div>
 
 <div class="flex flex-wrap justify-center gap-12 p-12">
-	{#each courses.slice(0, 100) as item}
+	{#each courses as item}
 		<a
 			href={'/' + item.id}
 			on:click={() => {
 				selectedCourse.set(item);
 			}}
-			class="flex h-32 w-80 flex-col items-center justify-between rounded-xl bg-primary p-4 text-primary-content transition-transform hover:bg-primary/75 active:scale-95"
+			class="flex h-32 w-80 flex-col items-center justify-between rounded-box bg-primary p-4 text-primary-content transition-transform hover:bg-primary/75 active:scale-95"
 		>
 			<div class="flex items-center gap-2 font-semibold">
 				<span class="iconify size-6 mingcute--comment-line"></span>

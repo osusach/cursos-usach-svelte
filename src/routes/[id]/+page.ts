@@ -1,21 +1,39 @@
-import { browser } from '$app/environment';
 import type { PageLoad } from './$types';
+import { selectedCourse } from '$lib';
 
 export const load: PageLoad = async ({ params, fetch, parent }) => {
 	const course_id: string = params.id;
+
+	if (selectedCourse) {
+	}
+
 	const { session, token } = await parent();
 
-	const votes = await fetch(
-		`https://osusachdb.ignacioladal.workers.dev/courseVote/byCourse/${course_id}`
-	).then(async (data) => {
-		if (!data.ok) return null;
-		const response = await data.json();
-		return response.payload;
-	});
+	const comments = fetch('https://osusachdb.ignacioladal.workers.dev/courseComment/getComments', {
+		method: 'POST',
+		body: JSON.stringify({
+			token,
+			course_id
+		})
+	})
+		.then((response) => {
+			if (!response.ok) return { payload: undefined };
+			return response.json();
+		})
+		.then((data) => data.payload);
+
+	const votes = fetch(`https://osusachdb.ignacioladal.workers.dev/courseVote/byCourse/${course_id}`)
+		.then((response) => {
+			if (!response.ok) return { payload: undefined };
+			return response.json();
+		})
+		.then((data) => data.payload);
+
 	return {
 		course_id,
-		votes,
+		votes: await votes,
 		session,
-		token
+		token,
+		comments: await comments
 	};
 };

@@ -1,31 +1,39 @@
-<script>
+<script lang="ts">
 	import { signIn, signOut } from '@auth/sveltekit/client';
-	import { page } from '$app/stores';
+	import type { PageData } from '../../routes/$types';
+	export let data: PageData;
+
+	console.log(data.session);
 </script>
 
-<button
-	class="btn btn-secondary col-span-2"
-	on:click={() => {
-		if ($page.data.session) {
+{#if data.session}
+	<button
+		class="btn btn-secondary col-span-2 text-lg shadow-xl"
+		on:click={() => {
 			signOut();
-		} else {
-		}
-		signIn('google');
-	}}
->
-	{#if $page.data.session}
-		<span>
-			<small>Signed in as</small><br />
-			<strong>{$page.data.session.user?.name ?? 'User'}</strong>
+		}}
+	>
+		<span class="inline-flex font-semibold gap-4">
 			<img
-				class="size-4"
-				src={$page.data.session?.user?.image ?? 'https://source.boringavatars.com/marble/120/'}
+				class="size-7 mask mask-squircle"
+				src={data.session?.user?.image ?? '/logo_transparent.png'}
 				alt="User Avatar"
 			/>
+			<p>{data.session.user?.name ?? 'Usuario'}</p>
 		</span>
-		<span>Sign out</span>
-	{:else}
-		<span>You are not signed in</span>
-		<span> Sign In with Google </span><span class="iconify size-6 mingcute--google-fill"></span>
-	{/if}
-</button>
+		<span class="divider divider-horizontal divider-neutral my-2"></span>
+		<p>
+			Salir
+		</p>
+	</button>
+{:else}
+	<button
+		class="btn btn-secondary col-span-2"
+		on:click={() => {
+			signIn('google');
+		}}
+	>
+		<span> Inicia sesión con Google </span><span class="iconify size-6 mingcute--google-fill"
+		></span>
+	</button>
+{/if}

@@ -8,7 +8,7 @@
 
 <span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
 
-<div class="mx-auto mt-8 grid grid-flow-col justify-center gap-12">
+<div class="mx-auto mt-8 grid grid-flow-row justify-center gap-4 lg:grid-flow-col lg:gap-12">
 	<button
 		class="btn btn-warning w-32"
 		on:click={() => {
@@ -27,7 +27,7 @@
 	>
 </div>
 
-<div class="flex flex-wrap justify-center gap-12 p-12">
+<div class="flex flex-wrap justify-center gap-4 p-4 lg:gap-12 lg:p-12">
 	{#each courses.slice(page, page + 50) as item}
 		<a
 			href={'/' + item.id}
@@ -37,12 +37,12 @@
 			class="flex h-32 w-80 flex-col items-center justify-between rounded-box bg-primary p-4 text-primary-content transition-transform hover:bg-primary/75 active:scale-95"
 		>
 			<div class="flex items-center gap-2 font-semibold">
-				<span class="iconify size-6 mingcute--comment-line"></span>
+				<span class="iconify size-5 mingcute--comment-line"></span>
 				<p>
 					{item.vote_count}
 				</p>
 			</div>
-			<p class="font-bold">{item.name}</p>
+			<p class="font-bold line-clamp-1">{item.name}</p>
 
 			<div class="grid grid-cols-2 grid-rows-1 gap-4 text-lg font-semibold">
 				<RatingBadge icon="mingcute--skull-fill" value={item.difficulty_mean} />

@@ -2,31 +2,32 @@
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import type { PageData } from '../../routes/$types';
 	export let data: PageData;
+	export let containerClass: string;
 
 	console.log(data.session);
 </script>
 
 {#if data.session}
 	<button
-		class="btn btn-secondary col-span-2 text-lg shadow-xl"
+		class={containerClass}
 		on:click={() => {
 			signOut();
 		}}
 	>
-		<span class="inline-flex gap-4 font-semibold">
+		<span class="inline-flex gap-2 sm:gap-4 font-semibold">
 			<img
 				class="mask mask-squircle size-7"
 				src={data.session?.user?.image ?? '/logo_transparent.png'}
 				alt="User Avatar"
 			/>
-			<p>{data.session.user?.name ?? 'Usuario'}</p>
+			<p class="w-[15ch] line-clamp-1 sm:w-fit ">{data.session.user?.name ?? 'Usuario'}</p>
 		</span>
-		<span class="divider divider-neutral divider-horizontal my-2"></span>
+		<span class="divider divider-neutral divider-horizontal my-2 mx-0"></span>
 		<p>Salir</p>
 	</button>
 {:else}
 	<button
-		class="btn btn-secondary col-span-2"
+		class={containerClass}
 		on:click={() => {
 			signIn('google');
 		}}

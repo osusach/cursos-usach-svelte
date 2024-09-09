@@ -44,23 +44,35 @@
 	}
 </script>
 
-<header class="mx-12 my-4 grid grid-cols-5 grid-rows-1 items-center gap-4">
-	<h1 class="btn btn-primary text-xl shadow-xl">
+<header
+	class="mx-4 my-4 grid grid-cols-1 justify-stretch gap-4 lg:mx-12 lg:grid-cols-5 lg:grid-rows-1"
+>
+	<a href="https://www.osusach.com" class="btn btn-primary text-xl shadow-xl p-0">
 		<img class="size-7" src="/logo_transparent.png" alt="Osusach logo" />
-		CursosUSACH
-	</h1>
+		<h1>CursosUSACH</h1>
+	</a>
 	<input
 		bind:value={search}
 		type="text"
 		placeholder="Buscar..."
-		class="input input-primary col-span-2"
+		class="input input-primary lg:col-span-2"
 	/>
-	<SignIn {data} />
+	<SignIn {data} containerClass="btn btn-secondary lg:col-span-2 text-lg shadow-xl" />
 </header>
 <main>
-	<div class="mx-12 grid grid-cols-2 grid-rows-1 gap-4">
-		<FacultySelect faculties={data.faculties} bind:selectedFaculty {getCareers} />
-		<CareerSelect {careers} bind:selectedCareer {getCourses} />
+	<div class="mx-4 grid grid-flow-row grid-rows-1 gap-4 lg:mx-12 lg:grid-cols-2">
+		<FacultySelect
+			containerClass="select select-primary min-w-0"
+			faculties={data.faculties}
+			bind:selectedFaculty
+			{getCareers}
+		/>
+		<CareerSelect
+			containerClass="select select-primary min-w-0"
+			{careers}
+			bind:selectedCareer
+			{getCourses}
+		/>
 	</div>
 	<Ramos {courses} />
 </main>

@@ -4,10 +4,11 @@
 	export let faculties: Faculty[] = [];
 	export let selectedFaculty = '';
 	export let getCareers = () => {};
+	export let containerClass: string;
 </script>
 
 <select
-	class="select select-primary"
+	class={containerClass}
 	name="faculty"
 	id="faculty"
 	bind:value={selectedFaculty}

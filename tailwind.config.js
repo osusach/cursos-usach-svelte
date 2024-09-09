@@ -42,5 +42,5 @@ export default {
 			'sunset'
 		]
 	},
-	plugins: [require('daisyui'), addIconSelectors(['mingcute'])]
+	plugins: [require('daisyui'), addIconSelectors(['mingcute']), addIconSelectors(['svg-spinners'])]
 };

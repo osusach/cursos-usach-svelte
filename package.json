@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@auth/core": "^0.34.2",
 		"@auth/sveltekit": "^1.4.2",
+		"@iconify-json/svg-spinners": "^1.2.0",
 		"daisyui": "^4.12.10"
 	}
 }

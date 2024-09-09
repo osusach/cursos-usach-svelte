@@ -1,11 +1,8 @@
+import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
-import { selectedCourse } from '$lib';
 
-export const load: PageLoad = async ({ params, fetch, parent }) => {
+export const load: PageLoad = async ({ url, params, fetch, parent }) => {
 	const course_id: string = params.id;
-
-	if (selectedCourse) {
-	}
 
 	const { session, token } = await parent();
 
@@ -29,11 +26,21 @@ export const load: PageLoad = async ({ params, fetch, parent }) => {
 		})
 		.then((data) => data.payload);
 
+	const course = fetch(`https://osusachdb.ignacioladal.workers.dev/courses/${course_id}`)
+		.then((response) => {
+			if (!response.ok) {
+				return { payload: undefined };
+			}
+			return response.json();
+		})
+		.then((data) => data.payload);
+
 	return {
 		course_id,
 		votes: await votes,
 		session,
 		token,
-		comments: await comments
+		comments: await comments,
+		course: course
 	};
 };

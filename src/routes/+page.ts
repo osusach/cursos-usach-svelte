@@ -8,7 +8,7 @@ export const load: PageLoad = async ({ fetch }) => {
 			return response.json();
 		})
 		.then((data) => data.payload);
-	const courses = fetch('https://osusachdb.ignacioladal.workers.dev/courses/1')
+	const courses: Promise<Course[]> = fetch('https://osusachdb.ignacioladal.workers.dev/courses/1')
 		.then((response) => {
 			if (!response.ok) return { payload: [] };
 			return response.json();

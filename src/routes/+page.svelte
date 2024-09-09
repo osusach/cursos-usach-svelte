@@ -4,8 +4,6 @@
 	import FacultySelect from '$lib/components/FacultySelect.svelte';
 	import Ramos from '$lib/components/Ramos.svelte';
 	import SignIn from '$lib/components/SignIn.svelte';
-	import SignOut from '$lib/components/SignOut.svelte';
-	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -29,8 +27,9 @@
 			});
 	};
 	const getCourses = async () => {
-		data.courses = await window
-			.fetch(`https://osusachdb.ignacioladal.workers.dev/courses/byCareer/${selectedCareer}`)
+		data.courses = await fetch(
+			`https://osusachdb.ignacioladal.workers.dev/courses/byCareer/${selectedCareer}`
+		)
 			.then((response) => {
 				if (!response.ok) return { payload: [] };
 				return response.json();

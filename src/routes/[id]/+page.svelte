@@ -36,9 +36,10 @@
 			<h1 class="p-6 text-3xl lg:text-5xl">{course?.id} - {course?.name}</h1>
 		</span>
 		<div class="flex flex-col items-stretch gap-4 lg:flex-row">
-			<Ratings data={data.votes.difficulty} total={data.votes.total_votes} type="difficulty"
+			<Ratings data={course.votes.difficulty_stats} total={course.vote_count} type="difficulty"
 			></Ratings>
-			<Ratings data={data.votes.time} total={data.votes.total_votes} type="time"></Ratings>
+			<Ratings data={course.votes.time_demand_stats} total={course.vote_count} type="time"
+			></Ratings>
 		</div>
 
 		{#if data.session}
@@ -55,7 +56,7 @@
 		{/if}
 		<span class="divider mb-8 mt-12 text-xl font-semibold">Comentarios</span>
 
-		{#if data.session || true}
+		{#if data.session}
 			<CommentSection {comments} user={data.session?.user} />
 		{:else}
 			<div class="alert m-4 mb-0 w-auto text-xl">

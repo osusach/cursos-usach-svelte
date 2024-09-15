@@ -1,20 +1,25 @@
-import axios from 'axios';
+import { API_URL } from '$env/static/private';
 
 export const load = async ({ locals, cookies, fetch }) => {
 	let loginResponse;
 	let session = await locals.auth();
-	let token;
-	token = cookies.get('authjs.session-token');
+    
+	console.log(session);
+    console.log();
+    
+
+	let token = cookies.get('authjs.session-token');
 
 	if (session) {
-		loginResponse = await fetch('https://osusachdb.ignacioladal.workers.dev/user/login', {
+		console.log('token');
+		console.log(token);
+
+		loginResponse = await fetch(API_URL + '/users/login', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				token: token
-			})
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token ?? ''}`
+			}
 		})
 			.then((response) => {
 				console.log(response);
@@ -22,14 +27,16 @@ export const load = async ({ locals, cookies, fetch }) => {
 				if (!response.ok) return { payload: undefined };
 				return response.json();
 			})
-			.then((data) => data.payload);
+			.then((data) => data.payload)
+			.catch((e) => {
+				console.error(e);
+			});
 
 		console.log(loginResponse ?? 'no auth');
 	}
 
 	return {
 		session,
-		token,
 		loginResponse
 	};
 };

@@ -1,46 +1,35 @@
-import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ url, params, fetch, parent }) => {
-	const course_id: string = params.id;
+export const load: PageLoad = async ({ params, fetch, parent }) => {
+	// const course_id: string = params.id;
 
-	const { session, token } = await parent();
+	// const { session, token } = await parent();
 
-	const comments = fetch('https://osusachdb.ignacioladal.workers.dev/courseComment/getComments', {
-		method: 'POST',
-		body: JSON.stringify({
-			token,
-			course_id
-		})
-	})
-		.then((response) => {
-			if (!response.ok) return { payload: undefined };
-			return response.json();
-		})
-		.then((data) => data.payload);
+	// const { course, comments } = fetch('/api/course', {
+	// 	method: 'POST',
+	// 	body: JSON.stringify({
+	// 		token,
+	// 		course_id
+	// 	})
+	// });
+	// .then((response) => {
+	// 	if (!response.ok) return { payload: undefined };
+	// 	return response.json();
+	// })
 
-	const votes = fetch(`https://osusachdb.ignacioladal.workers.dev/courseVote/byCourse/${course_id}`)
-		.then((response) => {
-			if (!response.ok) return { payload: undefined };
-			return response.json();
-		})
-		.then((data) => data.payload);
+	// const course = fetch(PUBLIC_API_URL + `/courses/${course_id}`)
+	// 	.then((response) => {
+	// 		if (!response.ok) {
+	// 			return { payload: undefined };
+	// 		}
+	// 		return response.json();
+	// 	})
+	// 	.then((data) => data.payload);
 
-	const course = fetch(`https://osusachdb.ignacioladal.workers.dev/courses/${course_id}`)
-		.then((response) => {
-			if (!response.ok) {
-				return { payload: undefined };
-			}
-			return response.json();
-		})
-		.then((data) => data.payload);
-
-	return {
-		course_id,
-		votes: await votes,
-		session,
-		token,
-		comments: await comments,
-		course: course
-	};
+	// return {
+	// 	course_id,
+	// 	session,
+	// 	comments: comments,
+	// 	course: course
+	// };
 };

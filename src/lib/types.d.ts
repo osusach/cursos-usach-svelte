@@ -13,6 +13,20 @@ type Course = {
 	vote_count: number;
 	difficulty_mean: number;
 	time_demand_mean: number;
+	votes: {
+      difficulty_stats: [
+        {
+          score: number,
+          votes: number
+        }
+      ],
+      time_demand_stats: [
+        {
+          score: number,
+          votes: number
+        }
+      ]
+    }
 };
 type Career = {
 	id: number;

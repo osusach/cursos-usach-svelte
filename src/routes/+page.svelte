@@ -8,7 +8,9 @@
 
 	export let data: PageData;
 
-	let courses = data.courses;
+	let courses: any = data.courses;
+	console.log(courses.courses);
+	
 	let search = '';
 	let selectedFaculty: string = '';
 	let selectedCareer: string = '';
@@ -16,7 +18,7 @@
 
 	const getCareers = async () => {
 		careers = await fetch(
-			`https://osusachdb.ignacioladal.workers.dev/careers/byFaculty/${selectedFaculty}`
+			`/api/careers/${selectedFaculty}`
 		)
 			.then((response) => {
 				if (!response.ok) return { payload: [] };
@@ -28,7 +30,7 @@
 	};
 	const getCourses = async () => {
 		data.courses = await fetch(
-			`https://osusachdb.ignacioladal.workers.dev/courses/byCareer/${selectedCareer}`
+			`/api/courses/byCareer/${selectedCareer}`
 		)
 			.then((response) => {
 				if (!response.ok) return { payload: [] };

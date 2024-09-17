@@ -25,6 +25,20 @@
 			});
 		}}>sort by time</button
 	>
+	<button
+		on:click={() => {
+			page = page > 50 ? page - 50 : 0;
+		}}
+	>
+		-1
+	</button>
+	<button
+		on:click={() => {
+			page = page + 50;
+		}}
+	>
+		+1
+	</button>
 </div>
 
 <div class="flex flex-wrap justify-center gap-4 p-4 lg:gap-12 lg:p-12">
@@ -42,7 +56,7 @@
 					{item.vote_count}
 				</p>
 			</div>
-			<p class="font-bold line-clamp-1">{item.name}</p>
+			<p class="line-clamp-1 font-bold">{item.name}</p>
 
 			<div class="grid grid-cols-2 grid-rows-1 gap-4 text-lg font-semibold">
 				<RatingBadge icon="mingcute--skull-fill" value={item.difficulty_mean} />

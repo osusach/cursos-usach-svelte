@@ -8,48 +8,38 @@
 
 	export let data: PageData;
 
-	let courses: any = data.courses;
-	console.log(courses.courses);
-	
+	let courses: any = data.courses ?? [];
+
 	let search = '';
 	let selectedFaculty: string = '';
 	let selectedCareer: string = '';
 	let careers: any = [];
 
 	const getCareers = async () => {
-		careers = await fetch(
-			`/api/careers/${selectedFaculty}`
-		)
-			.then((response) => {
-				if (!response.ok) return { payload: [] };
-				return response.json();
-			})
-			.then((data) => {
-				return data.payload;
-			});
+		careers = await fetch(`/api/careers/${selectedFaculty}`).then((response) => {
+			if (!response.ok) return { payload: [] };
+			return response.json();
+		});
 	};
 	const getCourses = async () => {
-		data.courses = await fetch(
-			`/api/courses/byCareer/${selectedCareer}`
-		)
-			.then((response) => {
-				if (!response.ok) return { payload: [] };
-				return response.json();
-			})
-			.then((data) => {
-				return data.payload;
-			});
+		data.courses = await fetch(`/api/courses/byCareer/${selectedCareer}`).then((response) => {
+			if (!response.ok) return { payload: [] };
+			return response.json();
+		});
+		console.log(data.courses);
+		
 	};
 
 	$: {
-		courses = data.courses.filter((item) => item.name.toLowerCase().includes(search));
+		let lower_search = search.toLowerCase();
+		courses = data.courses?.filter((item) => item.name.toLowerCase().includes(lower_search));
 	}
 </script>
 
 <header
 	class="mx-4 my-4 grid grid-cols-1 justify-stretch gap-4 lg:mx-12 lg:grid-cols-5 lg:grid-rows-1"
 >
-	<a href="https://www.osusach.com" class="btn btn-primary text-xl shadow-xl p-0">
+	<a href="https://www.osusach.com" class="btn btn-primary p-0 text-xl">
 		<img class="size-7" src="/logo_transparent.png" alt="Osusach logo" />
 		<h1>CursosUSACH</h1>
 	</a>
@@ -59,7 +49,7 @@
 		placeholder="Buscar..."
 		class="input input-primary lg:col-span-2"
 	/>
-	<SignIn {data} containerClass="btn btn-secondary lg:col-span-2 text-lg shadow-xl" />
+	<SignIn bind:data class="btn btn-secondary text-lg shadow-xl lg:col-span-2" />
 </header>
 <main>
 	<div class="mx-4 grid grid-flow-row grid-rows-1 gap-4 lg:mx-12 lg:grid-cols-2">

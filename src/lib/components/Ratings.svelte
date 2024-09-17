@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { flip } from 'svelte/animate';
-
-	export let data: any = [];
+	export let votes;
+	export let mean;
+	export let vote_count;
 	export let type: 'difficulty' | 'time';
-	export let total;
 
-	let values = data.scores;
-	let mean: number = data.average;
 	let isType = type == 'time';
-	if (total == 0) total = 1;
+	let total = vote_count == 0 ? 1 : vote_count;
 </script>
 
 <div
@@ -25,14 +22,14 @@
 			></span>
 		</div>
 		<div class="w-full rounded-lg p-4">
-			{#each values as value, index}
+			{#each votes as value, index}
 				<div class="flex items-end gap-2 p-1">
 					<p class="text-xl leading-8">
 						{index + 1}
 					</p>
 					<progress
 						class="progress progress-secondary h-6 w-full bg-base-content/45 shadow-inner shadow-primary-content/50"
-						value={Math.round((100 * value.votes) / total)}
+						value={Math.round((100 * value.count) / total)}
 						max="100"
 					></progress>
 				</div>

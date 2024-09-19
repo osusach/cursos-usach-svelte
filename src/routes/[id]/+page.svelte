@@ -4,9 +4,10 @@
 	import Vote from '$lib/components/Vote.svelte';
 	import type { PageData } from './$types';
 	import CommentSection from '$lib/components/CommentSection.svelte';
+	import SignInVote from '$lib/components/SignInVote.svelte';
 	export let data: PageData;
-	let { course, comments, session } = data;
-	console.log(data);
+	let { course, comments, session, can_vote } = data;
+	$: console.log('c', comments);
 </script>
 
 <div class="mx-2 flex flex-col sm:mx-8">
@@ -34,17 +35,23 @@
 		></Ratings>
 	</div>
 
+	<span class="divider mb-8 mt-12 text-xl font-semibold">Votar</span>
 	{#if session}
 		<Vote />
+	{:else if !can_vote && session}
+		<p class="btn btn-secondary self-center">Ya votaste por este ramo</p>
 	{:else}
-		<button class="btn btn-secondary self-center" on:click={() => {}}>
+		<p class="btn btn-secondary self-center">
 			Inicia sesión para poder votar
-		</button>
+			<SignInVote bind:session />
+		</p>
 	{/if}
 	<span class="divider mb-8 mt-12 text-xl font-semibold">Comentarios</span>
 
 	{#if session}
-		<CommentSection {comments} user={session.user} />
+		{#key data}
+			<CommentSection user={session} {course} bind:comments />
+		{/key}
 	{:else}
 		<div class="alert m-4 mb-0 w-auto text-xl">
 			<span class="iconify size-12 text-warning mingcute--alert-fill"></span>

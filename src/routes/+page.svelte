@@ -25,9 +25,7 @@
 		data.courses = await fetch(`/api/courses/byCareer/${selectedCareer}`).then((response) => {
 			if (!response.ok) return { payload: [] };
 			return response.json();
-		});
-		console.log(data.courses);
-		
+		});		
 	};
 
 	$: {

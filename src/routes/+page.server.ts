@@ -7,7 +7,9 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 
 	const user = await fetch('/api/login', {
 		method: 'POST',
-		body: JSON.stringify({ token })
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
 	})
 		.then((response) => {
 			if (!response.ok) return undefined;
@@ -16,6 +18,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		.catch((e) => {
 			console.error(e);
 		});
+
 	const faculties = fetch(API_URL + '/faculties')
 		.then((response) => {
 			if (!response.ok) return { payload: [] };

@@ -1,35 +1,59 @@
 <script lang="ts">
-	export let comments;
-	export let user;
+	import WriteComment from './WriteComment.svelte';
+
+	import { page_size } from '$lib';
+	import PaginationController from './PaginationController.svelte';
+	import type { Course, User } from '$lib/types';
+
+	export let course: Course;
+	export let user: User;
+	export let comments: any;
+	let content: string;
+	let parent_id: number = 1;
+
+	comments = comments ?? [];
+
+	async function sendComment() {
+		comments = await fetch('/api/comments', {
+			method: 'POST',
+			headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+			body: JSON.stringify({ content, course_id: course.id, parent_id })
+		})
+			.then((response) => {
+				if (!response.ok) return undefined;
+				return response.json();
+			})
+			.then((data) => data.comments);
+		content = ""
+	}
+
+	let page = 0;
+	$: console.log(comments);
 </script>
 
-<div class="m-4 flex flex-row rounded-xl bg-base-300 text-base-content">
-	<img src={user?.profile_img} alt="user img" class="mask mask-squircle m-4 mr-0 size-8 sm:size-16" />
-	<span class="w-full p-4">
-		<p class="text-lg font-semibold">{user?.name}</p>
-		<div class="flex flex-col gap-y-4">
-			<label class="form-control" for="w-comment">
-				<div class="label label-text">Escribe un comentario!</div>
-				<textarea
-					class="textarea textarea-bordered textarea-sm h-24 w-full resize-none leading-snug"
-					placeholder="Escribe un comentario!"
-					name="write"
-					id="w-comment"
-				></textarea>
-			</label>
-			<button class="btn btn-success">Enviar comentario</button>
-		</div>
-	</span>
-</div>
+<WriteComment
+	{user}
+	bind:content
+	click={() => {
+		sendComment();
+	}}
+></WriteComment>
 
+<PaginationController bind:page array_length={20} />
 <div class="flex flex-col gap-4 p-4">
-	{#each comments as comment}
-		<div class="flex flex-row rounded-xl bg-base-300 text-base-content">
-			<img src={user?.profile_img} alt="user img" class="mask mask-squircle m-4 mr-0 size-8 sm:size-16" />
-			<span class="p-4">
-				<p class="text-lg font-semibold">{user?.name}</p>
-				<p class="w-full whitespace-normal break-all text-lg">{comment}</p>
-			</span>
-		</div>
-	{/each}
+	{#key comments}
+		{#each comments.slice(page * page_size, (page + 1) * page_size).toReversed() as comment}
+			<div class="flex flex-row rounded-xl bg-base-300 text-base-content">
+				<img
+					src={comment.user_profile_img}
+					alt="user img"
+					class="mask mask-squircle m-4 mr-0 size-8 sm:size-16"
+				/>
+				<span class="p-4">
+					<p class="text-lg font-semibold">{comment.user_name}</p>
+					<p class="w-full whitespace-normal break-all text-lg">{comment.content}</p>
+				</span>
+			</div>
+		{/each}
+	{/key}
 </div>

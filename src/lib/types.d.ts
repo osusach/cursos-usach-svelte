@@ -14,19 +14,19 @@ type Course = {
 	difficulty_mean: number;
 	time_demand_mean: number;
 	votes: {
-      difficulty_stats: [
-        {
-          score: number,
-          votes: number
-        }
-      ],
-      time_demand_stats: [
-        {
-          score: number,
-          votes: number
-        }
-      ]
-    }
+		difficulty_stats: [
+			{
+				score: number;
+				votes: number;
+			}
+		];
+		time_demand_stats: [
+			{
+				score: number;
+				votes: number;
+			}
+		];
+	};
 };
 type Career = {
 	id: number;
@@ -36,4 +36,10 @@ type Career = {
 	modification_date: Date;
 };
 
-export { Faculty, Course, Career };
+type User = {
+	profile_img: string;
+	name: string;
+	token: string;
+};
+
+export { Faculty, Course, Career, User };

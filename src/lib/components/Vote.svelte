@@ -8,8 +8,6 @@
 	let array5 = [0, 0, 0, 0, 0];
 </script>
 
-<span class="divider mb-8 mt-12 text-xl font-semibold">Votar</span>
-
 <div class="grid grid-cols-1 place-items-stretch gap-y-4 lg:grid-cols-4 lg:gap-x-4">
 	<div class="col-span-1"></div>
 	<!-- <ol class="rounded-box bg-primary p-4 text-primary-content shadow-xl">

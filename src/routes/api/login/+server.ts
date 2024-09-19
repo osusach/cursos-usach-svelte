@@ -3,25 +3,35 @@ import type { RequestHandler } from './$types';
 import { API_URL } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
-	const { token } = await request.json();
+	const token = request.headers.get('Authorization') ?? '';
 
 	const user = await fetch(API_URL + '/users/login', {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${token}`
+			Authorization: token
 		}
 	}).then((response) => {
+		// console.log(response);
+
 		if (!response.ok) {
+			console.log('BORRANDO COOKI');
+			console.log(token);
+
 			cookies.delete('access-token', { path: '/' });
+			cookies.delete('user', { path: '/' });
 			return undefined;
 		}
-		cookies.set('access-token', token, { path: '/' });
 		return response.json();
 	});
 	console.log('=============user==================');
 	console.log(user);
-	if (user) return json(user);
-	return json({}, { status: 401, statusText: 'Bad token' });
+	if (user) {
+		cookies.set('access-token', token.substring(7), { path: '/' });
+		cookies.set('user', JSON.stringify(user), { path: '/' });
+		return json(user);
+	} else {
+		return json({}, { status: 401, statusText: 'Bad token' });
+	}
 };
 
 export const GET: RequestHandler = async ({ cookies }) => {

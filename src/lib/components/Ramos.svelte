@@ -1,9 +1,15 @@
 <script lang="ts">
-	import { selectedCourse } from '$lib';
+	import { page_size, selectedCourse } from '$lib';
 	import type { Course } from '$lib/types';
+	import PaginationController from './PaginationController.svelte';
 	import RatingBadge from './RatingBadge.svelte';
 	export let courses: Course[] = [];
 	let page = 0;
+
+	function resetPage(courses: Course[]) {
+		page = 0;
+	}
+	$: resetPage(courses);
 </script>
 
 <span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
@@ -24,25 +30,11 @@
 				return b.time_demand_mean - a.time_demand_mean;
 			});
 		}}>sort by time</button
-	>
-	<button
-		on:click={() => {
-			page = page > 50 ? page - 50 : 0;
-		}}
-	>
-		-1
-	</button>
-	<button
-		on:click={() => {
-			page = page + 50;
-		}}
-	>
-		+1
-	</button>
+	><PaginationController bind:page array_length={courses.length} />
 </div>
 
 <div class="flex flex-wrap justify-center gap-4 p-4 lg:gap-12 lg:p-12">
-	{#each courses.slice(page, page + 50) as item}
+	{#each courses.slice(page * page_size, (page + 1) * page_size) as item}
 		<a
 			href={'/' + item.id}
 			on:click={() => {

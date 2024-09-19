@@ -1,27 +1,32 @@
 <script lang="ts">
 	import type { PageData } from '../../routes/$types';
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 	import { PUBLIC_GOOGLE_CLIENT_ID } from '$env/static/public';
-	import { redirect } from '@sveltejs/kit';
+	import { invalidateAll } from '$app/navigation';
 
 	export let data: PageData;
 
 	let is_logged = data.session !== undefined;
+	let loading = false;
 
 	function renderGSI() {
+		if (data.session !== undefined) return;
 		//@ts-ignore
 		window.google.accounts.id.initialize({
 			client_id: PUBLIC_GOOGLE_CLIENT_ID,
 			callback: async (params: { credential: string }) => {
-				data.session = await fetch('/api/login', {
+				loading = true;
+				data.session = await fetch('api/login', {
 					method: 'POST',
-					body: JSON.stringify({ token: params.credential })
+					headers: {
+						Authorization: `Bearer ${params.credential}`
+					}
 				}).then(async (response) => {
 					if (!response.ok) return undefined;
+					invalidateAll();
+					loading = false;
 					return response.json();
 				});
-				is_logged = data.session !== undefined;
 			},
 			auto_prompt: false,
 			hd: 'usach.cl'
@@ -39,17 +44,24 @@
 	onMount(renderGSI);
 </script>
 
-	<div class="place-self-center lg:col-span-2" class:hidden={is_logged}>
-		<div id="buttonDiv"></div>
+{#if data.session === undefined}
+	{#if loading}
+	<div class={$$props.class}>
+
+		<span class="iconify svg-spinners--180-ring"></span>
 	</div>
+	{:else}
+		<div class="place-self-center lg:col-span-2">
+			<div id="buttonDiv"></div>
+		</div>
+	{/if}
+{:else}
 	<button
-		class:hidden={!is_logged}
 		class={$$props.class}
 		on:click={async () => {
 			await fetch('/api/login');
-			data.session = undefined;
-			is_logged = false;
-			renderGSI()
+			await invalidateAll();
+			renderGSI();
 		}}
 	>
 		<span class="inline-flex gap-2 font-semibold sm:gap-4">
@@ -63,3 +75,4 @@
 		<span class="divider divider-neutral divider-horizontal mx-0 my-2"></span>
 		<p>Salir</p>
 	</button>
+{/if}

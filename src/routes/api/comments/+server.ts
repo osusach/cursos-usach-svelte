@@ -4,6 +4,7 @@ import type { RequestHandler } from './$types';
 import { page_size } from '$lib';
 
 export const GET: RequestHandler = async ({ request }) => {
+    console.log("GET COMM");
 	const { course_id, parent_id, content } = await request.json();
 	const token = request.headers.get('Authorization');
 
@@ -27,8 +28,6 @@ export const GET: RequestHandler = async ({ request }) => {
 			return response.json();
 		})
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 
@@ -36,24 +35,14 @@ export const GET: RequestHandler = async ({ request }) => {
 };
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
+    console.log("POST COMM");
 	const { course_id, parent_id, content } = await request.json();
 	const token = request.headers.get('Authorization');
-	console.log(course_id);
-	console.log(content);
-	console.log(parent_id);
-	console.log(
-		JSON.stringify({
-			course_id,
-			parent_id,
-			content
-		})
-	);
 
 	await fetch(API_URL + '/courseComments', {
 		method: 'POST',
 		headers: {
-			Authorization: `${token}`,
-			'Content-Type': 'application/json'
+			Authorization: `${token}`
 		},
 		body: JSON.stringify({
 			course_id,
@@ -82,14 +71,13 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		}
 	)
 		.then((response) => {
+			console.log(response);
 			if (!response.ok) {
 				return undefined;
 			}
 			return response.json();
 		})
-		.then((data) => {
-			console.log(data);
-			
+		.then((data) => {			
 			return data?.comments;
 		});
 

@@ -41,7 +41,7 @@
 	{:else if !can_vote && session}
 		<p class="btn btn-secondary self-center">Ya votaste por este ramo</p>
 	{:else}
-		<p class="btn btn-secondary self-center">
+		<p class="rounded-btn bg-secondary self-center h-fit p-4 flex flex-col gap-4 font-semibold">
 			Inicia sesión para poder votar
 			<SignInVote bind:session />
 		</p>
@@ -49,9 +49,7 @@
 	<span class="divider mb-8 mt-12 text-xl font-semibold">Comentarios</span>
 
 	{#if session}
-		{#key data}
 			<CommentSection user={session} {course} bind:comments />
-		{/key}
 	{:else}
 		<div class="alert m-4 mb-0 w-auto text-xl">
 			<span class="iconify size-12 text-warning mingcute--alert-fill"></span>

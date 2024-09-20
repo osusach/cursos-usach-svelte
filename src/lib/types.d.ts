@@ -41,5 +41,18 @@ type User = {
 	name: string;
 	token: string;
 };
-
-export { Faculty, Course, Career, User };
+type Comment = {
+	id: number;
+	course_id: number;
+	user_id: number;
+	parent_id: number;
+	reply_count: number;
+	content: string;
+	upvotes: number;
+	creation_date: Date;
+	modification_date: Date;
+	is_already_voted: boolean;
+	user_name: string;
+	user_profile_img: string;
+};
+export { Faculty, Course, Career, User, Comment };

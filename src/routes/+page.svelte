@@ -25,7 +25,7 @@
 		data.courses = await fetch(`/api/courses/byCareer/${selectedCareer}`).then((response) => {
 			if (!response.ok) return { payload: [] };
 			return response.json();
-		});		
+		});
 	};
 
 	$: {
@@ -47,7 +47,7 @@
 		placeholder="Buscar..."
 		class="input input-primary lg:col-span-2"
 	/>
-	<SignIn bind:data class="btn btn-secondary text-lg shadow-xl lg:col-span-2" />
+	<SignIn bind:data class="btn btn-secondary text-lg lg:col-span-2" />
 </header>
 <main>
 	<div class="mx-4 grid grid-flow-row grid-rows-1 gap-4 lg:mx-12 lg:grid-cols-2">

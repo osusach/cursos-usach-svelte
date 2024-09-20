@@ -18,7 +18,11 @@ export const POST: RequestHandler = async ({ request }) => {
 	const comments = await fetch(
 		API_URL +
 			'/courseComments?' +
-			new URLSearchParams({ course_id: course_id, page: '0', page_size: page_size.toString() }).toString(),
+			new URLSearchParams({
+				course_id: course_id,
+				page: '0',
+				page_size: page_size.toString()
+			}).toString(),
 		{
 			method: 'GET',
 			headers: {
@@ -28,12 +32,12 @@ export const POST: RequestHandler = async ({ request }) => {
 	)
 		.then((response) => {
 			if (!response.ok) {
-				return undefined;
+				return { comments: [] };
 			}
 			return response.json();
 		})
 		.then((data) => {
-			return data?.comments;
+			return data.comments;
 		});
 
 	return json({ course, comments });

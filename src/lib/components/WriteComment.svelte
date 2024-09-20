@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { Course, User } from '$lib/types';
+	import type { User } from '$lib/types';
 
 	export let user: User;
 	export let content = '';
 	export let click;
+	export let sending_comment: boolean;
 </script>
 
 <div class="m-4 flex flex-row rounded-xl bg-base-300 text-base-content">
@@ -25,9 +26,15 @@
 					bind:value={content}
 				></textarea>
 			</label>
-			<button
-				class="btn btn-success" on:click={click}>Enviar comentario</button
-			>
+			{#if !sending_comment}
+				<button class="btn btn-success" on:click={click} disabled={content == ''}>
+					Enviar comentario
+				</button>
+			{:else}
+				<button class="btn btn-disabled">
+					<span class="iconify h-6 svg-spinners--180-ring"></span>
+				</button>
+			{/if}
 		</div>
 	</span>
 </div>

@@ -44,6 +44,6 @@
 			page = max_value;
 		}}
 	>
-		{max_value}
+		{max_value + 1}
 	</button>
 </div>

@@ -1,11 +1,15 @@
 <script lang="ts">
-	export let votes;
-	export let mean;
-	export let vote_count;
+	import type { Course } from '$lib/types';
+
+	export let course: Course;
 	export let type: 'difficulty' | 'time';
 
 	let isType = type == 'time';
-	let total = vote_count == 0 ? 1 : vote_count;
+	let total = course.vote_count == 0 ? 1 : course.vote_count;
+
+	
+	$: votes = isType ? course.votes.time_demand_stats : course.votes.difficulty_stats;
+	$: mean = isType ? course.time_demand_mean : course.difficulty_mean;
 </script>
 
 <div

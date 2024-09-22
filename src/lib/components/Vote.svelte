@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-
 	let difficulty = 1;
 	let time = 1;
-	let show = false;
 
 	let array5 = [0, 0, 0, 0, 0];
+
+	export let sendVote: (difficulty: number, time: number) => void;
 </script>
 
 <div class="grid grid-cols-1 place-items-stretch gap-y-4 lg:grid-cols-4 lg:gap-x-4">
@@ -47,7 +46,12 @@
 				{/each}
 			</div>
 		</div>
-		<button class="btn btn-success shadow-xl lg:col-span-2">Enviar</button>
+		<button
+			class="btn btn-success shadow-xl lg:col-span-2"
+			on:click={() => {
+				sendVote(difficulty, time);
+			}}>Enviar</button
+		>
 	</div>
 
 	<!-- <ol class="rounded-box bg-accent p-4 shadow-xl">

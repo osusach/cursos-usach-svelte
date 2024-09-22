@@ -15,8 +15,6 @@ export const GET: RequestHandler = async ({ params }) => {
 		.then((data) => {
 			return data.courses;
 		});
-	console.log('-------------------');
-	console.log(courses);
 
 	return json(courses);
 };

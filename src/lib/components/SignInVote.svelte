@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { PUBLIC_GOOGLE_CLIENT_ID } from '$env/static/public';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 
 	export let session;
 
@@ -17,7 +17,7 @@
 					}
 				}).then(async (response) => {
 					if (!response.ok) return undefined;
-					invalidateAll();
+					await invalidateAll();
 					return response.json();
 				});
 			},

@@ -13,8 +13,6 @@
 	let sending_comment: boolean = false;
 
 	async function sendComment(parent_id: number) {
-		console.log('send');
-
 		sending_comment = true;
 		comments = await fetch('/api/comments', {
 			method: 'POST',
@@ -45,6 +43,6 @@
 <PaginationController bind:page array_length={20} />
 <div class="flex flex-col gap-4 p-4">
 	{#each comments.slice(page * page_size, (page + 1) * page_size).toReversed() as comment}
-		<CommentComponent {comment} bind:comments {course} {sendComment} {user}></CommentComponent>
+		<CommentComponent {comment} {course} {sendComment} {user}></CommentComponent>
 	{/each}
 </div>

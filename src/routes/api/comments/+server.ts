@@ -4,7 +4,6 @@ import type { RequestHandler } from './$types';
 import { page_size } from '$lib';
 
 export const GET: RequestHandler = async ({ request }) => {
-    console.log("GET COMM");
 	const { course_id, parent_id, content } = await request.json();
 	const token = request.headers.get('Authorization');
 
@@ -35,7 +34,6 @@ export const GET: RequestHandler = async ({ request }) => {
 };
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
-    console.log("POST COMM");
 	const { course_id, parent_id, content } = await request.json();
 	const token = request.headers.get('Authorization');
 

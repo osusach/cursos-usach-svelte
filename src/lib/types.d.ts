@@ -17,13 +17,13 @@ type Course = {
 		difficulty_stats: [
 			{
 				score: number;
-				votes: number;
+				count: number;
 			}
 		];
 		time_demand_stats: [
 			{
 				score: number;
-				votes: number;
+				count: number;
 			}
 		];
 	};

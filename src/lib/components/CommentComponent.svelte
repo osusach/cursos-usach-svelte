@@ -3,7 +3,6 @@
 
 	export let course: Course;
 	export let user: User;
-	export let comments: Comment[];
 	export let comment: Comment;
 	export let sendComment: (parent_id: number) => void;
 	let content: string;
@@ -12,8 +11,6 @@
 	let sending_vote: boolean = false;
 
 	async function voteComment(vote: number) {
-		console.log('vote');
-
 		sending_vote = true;
 		await fetch('/api/comments/vote', {
 			method: 'POST',
@@ -31,7 +28,7 @@
 		alt="user img"
 		class="mask mask-squircle m-4 mr-0 size-8 sm:size-16"
 	/>
-	<div class="grow p-4 flex flex-col gap-4 sm:text-lg">
+	<div class="flex grow flex-col gap-4 p-4 sm:text-lg">
 		<p class="font-semibold">
 			{comment.user_name}
 		</p>
@@ -44,15 +41,15 @@
 		<div class="grid grid-flow-col gap-2">
 			<button
 				disabled={sending_vote}
-				class="btn btn-sm"
+				class="btn btn-xs"
 				class:btn-success={comment.is_already_voted}
 				on:click={() => {
-					voteComment(1);
-				}}>+</button
+					voteComment(-1);
+				}}>-</button
 			>
 			<button
 				disabled={sending_vote}
-				class="btn btn-sm"
+				class="btn btn-xs"
 				class:btn-success={comment.is_already_voted}
 				on:click={() => {
 					voteComment(0);
@@ -60,13 +57,13 @@
 			>
 			<button
 				disabled={sending_vote}
-				class="btn btn-sm"
+				class="btn btn-xs"
 				class:btn-success={comment.is_already_voted}
 				on:click={() => {
-					voteComment(-1);
-				}}>-</button
+					voteComment(1);
+				}}>+</button
 			>
+			<button class="btn btn-secondary btn-xs">Responder</button>
 		</div>
-		<button class="">Responder</button>
 	</div>
 </div>

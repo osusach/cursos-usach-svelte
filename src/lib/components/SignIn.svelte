@@ -23,7 +23,6 @@
 					}
 				}).then(async (response) => {
 					if (!response.ok) return undefined;
-					invalidateAll();
 					loading = false;
 					return response.json();
 				});

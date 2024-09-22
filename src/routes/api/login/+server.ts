@@ -36,5 +36,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
 export const GET: RequestHandler = async ({ cookies }) => {
 	cookies.delete('access-token', { path: '/' });
+	cookies.delete('user', { path: '/' });
 	return json({}, { status: 200, statusText: 'logout' });
 };

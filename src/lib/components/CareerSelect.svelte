@@ -1,17 +1,16 @@
 <script lang="ts">
+	import { selectedCareer } from '$lib';
 	import type { Career } from '$lib/types';
 
 	export let careers: Career[] = [];
-	export let selectedCareer: string = '';
 	export let getCourses = () => {};
-	export let containerClass: string;
 </script>
 
 <select
-	class={containerClass}
+	{...$$restProps}
 	name="career"
 	id="career"
-	bind:value={selectedCareer}
+	bind:value={$selectedCareer}
 	on:change={getCourses}
 >
 	<option value="" disabled>Selecciona tu carrera</option>

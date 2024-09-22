@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint svelte/infinite-reactive-loop: "error" */
 	import '$lib/app.css';
 	import Ratings from '$lib/components/Ratings.svelte';
 	import Vote from '$lib/components/Vote.svelte';

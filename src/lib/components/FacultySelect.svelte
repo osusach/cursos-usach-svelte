@@ -1,17 +1,16 @@
 <script lang="ts">
+	import { selectedFaculty } from '$lib';
 	import type { Faculty } from '$lib/types';
 
 	export let faculties: Faculty[] = [];
-	export let selectedFaculty = '';
 	export let getCareers = () => {};
-	export let containerClass: string;
 </script>
 
 <select
-	class={containerClass}
+	{...$$restProps}
 	name="faculty"
 	id="faculty"
-	bind:value={selectedFaculty}
+	bind:value={$selectedFaculty}
 	on:change={getCareers}
 >
 	<option value="" disabled>Selecciona tu facultad</option>

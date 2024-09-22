@@ -8,7 +8,9 @@
 	import { invalidateAll } from '$app/navigation';
 	export let data: PageData;
 
+	let sendingVote: boolean = false;
 	async function sendVote(difficulty: number, time: number) {
+		sendingVote = true;
 		await fetch('/api/courses', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -19,12 +21,12 @@
 			headers: {
 				Authorization: `Bearer ${data.session.token}`
 			}
-		})
+		});
 
 		await invalidateAll();
 		data = data;
+		sendingVote = false;
 	}
-
 </script>
 
 <div class="mx-2 flex flex-col sm:mx-8">
@@ -46,7 +48,7 @@
 
 	<span class="divider mb-8 mt-12 text-xl font-semibold">Votar</span>
 	{#if data.session}
-		<Vote {sendVote} />
+		<Vote {sendVote} bind:sendingVote />
 	{:else if !data.can_vote && data.session}
 		<p class="btn btn-secondary self-center">Ya votaste por este ramo</p>
 	{:else}

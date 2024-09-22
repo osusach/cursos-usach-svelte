@@ -75,7 +75,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			}
 			return response.json();
 		})
-		.then((data) => {			
+		.then((data) => {
 			return data?.comments;
 		});
 

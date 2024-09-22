@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	const careers = await fetch(API_URL + `/careers?faculty_id=${faculty_id}`)
 		.then((response) => {
-			if (!response.ok) error(response.status, response.statusText);
+			if (!response.ok) return { careers: [] };
 			return response.json();
 		})
 		.then((data) => {

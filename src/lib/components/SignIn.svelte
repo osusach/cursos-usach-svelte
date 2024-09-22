@@ -3,13 +3,14 @@
 	import { onMount } from 'svelte';
 	import { PUBLIC_GOOGLE_CLIENT_ID } from '$env/static/public';
 	import { invalidateAll } from '$app/navigation';
+	import { browser } from '$app/environment';
 
 	export let data: PageData;
 
-	let is_logged = data.session !== undefined;
 	let loading = false;
 
 	function renderGSI() {
+		if (!browser) return;
 		if (data.session !== undefined) return;
 		//@ts-ignore
 		window.google.accounts.id.initialize({
@@ -45,10 +46,9 @@
 
 {#if data.session === undefined}
 	{#if loading}
-	<div class={$$props.class}>
-
-		<span class="iconify svg-spinners--180-ring"></span>
-	</div>
+		<div class={$$props.class}>
+			<span class="iconify svg-spinners--180-ring"></span>
+		</div>
 	{:else}
 		<div class="place-self-center lg:col-span-2">
 			<div id="buttonDiv"></div>

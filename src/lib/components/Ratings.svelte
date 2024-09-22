@@ -7,7 +7,6 @@
 	let isType = type == 'time';
 	let total = course.vote_count == 0 ? 1 : course.vote_count;
 
-	
 	$: votes = isType ? course.votes.time_demand_stats : course.votes.difficulty_stats;
 	$: mean = isType ? course.time_demand_mean : course.difficulty_mean;
 </script>

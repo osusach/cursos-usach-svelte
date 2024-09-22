@@ -5,7 +5,7 @@ import { API_URL } from '$env/static/private';
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	let token = cookies.get('access-token');
 
-	const user = await fetch('/api/login', {
+	const user = fetch('/api/login', {
 		method: 'POST',
 		headers: {
 			Authorization: `Bearer ${token}`
@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		});
 	const courses: Promise<Course[]> = fetch(API_URL + '/courses')
 		.then((response) => {
-			if (!response.ok) return { payload: [] };
+			if (!response.ok) return { courses: [] };
 			return response.json();
 		})
 		.then((data) => data.courses)
@@ -40,7 +40,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 
 	return {
 		faculties: await faculties,
-		courses: await courses,
-		session: user
+		courses: courses,
+		session: await user
 	};
 };

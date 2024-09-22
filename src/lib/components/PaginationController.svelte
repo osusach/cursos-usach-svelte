@@ -1,10 +1,26 @@
 <script lang="ts">
-	import { page_size } from '$lib';
+	import { page_size, max_pagination_size, range } from '$lib';
 
 	export let page = 0;
-	export let array_length;
-    export let button_class = "btn w-16 btn-secondary"
-	let max_value = Math.ceil(array_length / page_size) - 1;
+	export let array_length = 5;
+	export let button_class = 'btn btn-secondary btn-sm w-12';
+	$: console.log(array_length);
+
+	$: max_value = Math.ceil(array_length / page_size) - 1;
+
+	function updatePagination(page: number, array_length: number) {
+		let pagination_size = Math.min(max_value + 1, max_pagination_size);
+		let array_start = page - 1;
+
+		if (array_start + pagination_size > max_value) array_start = max_value - pagination_size + 1;
+		if (page == 0) array_start += 1;
+		console.log(pagination_size, array_start);
+
+		if (pagination_size < 1 && array_start == 0) return range(1, 0);
+
+		return range(pagination_size, array_start);
+	}
+	$: array = updatePagination(page, array_length);
 </script>
 
 <div class="grid grid-flow-col gap-4">
@@ -13,37 +29,30 @@
 		on:click={() => {
 			page = 0;
 		}}
-	>
-		1
-	</button>
-	<button
-		class={button_class}
-		on:click={() => {
-			page -= 1;
-		}}
 		disabled={page - 1 < 0}
 	>
-		<span class="iconify mingcute--arrows-left-fill size-6"></span>
+		<span class="iconify size-6 mingcute--arrows-left-fill"></span>
 	</button>
-	<p class={"btn-info " + button_class}>
-		{page + 1}
-	</p>
-	<button
-		class={button_class}
-		on:click={() => {
-			page += 1;
-		}}
-		disabled={page + 1 > max_value}
-	>
-		<span class="iconify mingcute--arrows-right-fill size-6"></span>
-	</button>
+
+	{#each array as pageNumber}
+		<button
+			class={button_class}
+			on:click={() => {
+				page = pageNumber;
+			}}
+			disabled={page == pageNumber}
+		>
+			{pageNumber + 1}
+		</button>
+	{/each}
 
 	<button
 		class={button_class}
 		on:click={() => {
 			page = max_value;
 		}}
+		disabled={page + 1 > max_value}
 	>
-		{max_value + 1}
+		<span class="iconify size-6 mingcute--arrows-right-fill"></span>
 	</button>
 </div>

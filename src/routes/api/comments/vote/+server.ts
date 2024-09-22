@@ -17,6 +17,5 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			comment_id,
 			vote
 		})
-	})
-
+	});
 };

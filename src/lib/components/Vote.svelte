@@ -1,7 +1,7 @@
 <script lang="ts">
+	export let sendingVote = false;
 	let difficulty = 1;
 	let time = 1;
-
 	let array5 = [0, 0, 0, 0, 0];
 
 	export let sendVote: (difficulty: number, time: number) => void;
@@ -46,12 +46,18 @@
 				{/each}
 			</div>
 		</div>
-		<button
-			class="btn btn-success shadow-xl lg:col-span-2"
-			on:click={() => {
-				sendVote(difficulty, time);
-			}}>Enviar</button
-		>
+		{#if !sendingVote}
+			<button
+				class="btn btn-success shadow-xl lg:col-span-2"
+				on:click={() => {
+					sendVote(difficulty, time);
+				}}>Enviar</button
+			>
+		{:else}
+			<button class="btn btn-success shadow-xl lg:col-span-2" disabled>
+				<span class="iconify size-6 svg-spinners--180-ring"></span>
+			</button>
+		{/if}
 	</div>
 
 	<!-- <ol class="rounded-box bg-accent p-4 shadow-xl">

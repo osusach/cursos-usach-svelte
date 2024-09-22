@@ -1,15 +1,28 @@
 <script lang="ts">
 	import { page_size, selectedCourse } from '$lib';
+
 	import type { Course } from '$lib/types';
+
 	import PaginationController from './PaginationController.svelte';
 	import RatingBadge from './RatingBadge.svelte';
-	export let courses: Course[] = [];
-	let page = 0;
 
-	function resetPage(courses: Course[]) {
+	export let courses: Course[];
+	export let search: string;
+
+	let page = 0;
+	let array_length = courses.length;
+	let filteredCourses: Course[] = courses;
+
+	function coruseFilters(courses: Course[], search: string) {
+		filteredCourses = courses;
+		if (search != '') {
+			let lower_search = search.toLowerCase();
+			filteredCourses = courses.filter((item) => item.name.toLowerCase().includes(lower_search));
+		}
+		array_length = filteredCourses.length;
 		page = 0;
 	}
-	$: resetPage(courses);
+	$: coruseFilters(courses, search);
 </script>
 
 <span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
@@ -30,11 +43,11 @@
 				return b.time_demand_mean - a.time_demand_mean;
 			});
 		}}>sort by time</button
-	><PaginationController bind:page array_length={courses.length} />
+	><PaginationController bind:page bind:array_length />
 </div>
 
 <div class="flex flex-wrap justify-center gap-4 p-4 lg:gap-12 lg:p-12">
-	{#each courses.slice(page * page_size, (page + 1) * page_size) as item}
+	{#each filteredCourses.slice(page * page_size, (page + 1) * page_size) as item}
 		<a
 			href={'/' + item.id}
 			on:click={() => {

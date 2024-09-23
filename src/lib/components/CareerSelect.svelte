@@ -13,7 +13,7 @@
 	bind:value={$selectedCareer}
 	on:change={getCourses}
 >
-	<option value="" disabled>Selecciona tu carrera</option>
+	<option value="0" disabled selected>Selecciona tu carrera</option>
 	{#each careers as career}
 		<option value={career.id}>{career.id} - {career.name}</option>
 	{/each}

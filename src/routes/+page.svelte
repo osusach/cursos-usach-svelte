@@ -11,6 +11,7 @@
 
 	import { onMount } from 'svelte';
 	import type { Course } from '$lib/types';
+	import Filters from '$lib/components/Filters.svelte';
 
 	export let data: PageData;
 
@@ -64,5 +65,7 @@
 		<FacultySelect class="select select-primary min-w-0" faculties={data.faculties} {getCareers} />
 		<CareerSelect class="select select-primary min-w-0" {careers} {getCourses} />
 	</div>
+	<span class="divider divider-primary px-12 text-2xl font-semibold">CURSOS</span>
+	<Filters bind:courses {getCourses}></Filters>
 	<Ramos bind:courses bind:search />
 </main>

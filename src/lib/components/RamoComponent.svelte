@@ -13,14 +13,19 @@
 	on:click={() => {
 		selectedCourse.set(course);
 	}}
-	class="flex h-fit w-80 flex-col items-center justify-between rounded-box bg-primary p-4 text-primary-content transition-transform hover:bg-primary/75 active:scale-95"
+	class={'flex h-44 w-80 flex-col items-center justify-around rounded-box bg-primary p-4 text-primary-content' +
+		'transition-transform hover:bg-primary/75 active:scale-95'}
 >
-	<p class="mb-2 line-clamp-2 h-12 text-center font-bold">{course.id} - {course.name}</p>
+	<p class="line-clamp-2 max-h-12 place-self-center self-center text-center font-bold">
+		{course.id} - {course.name}
+	</p>
 
 	<div class="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-2 text-lg font-semibold">
 		<RatingBadge icon="mingcute--skull-fill" value={course.difficulty_mean} />
 		<RatingBadge icon="mingcute--time-fill" value={course.time_demand_mean} />
-		<div class="inline-flex w-24 items-center justify-around gap-1 rounded-badge px-2 py-1 bg-accent col-span-2 mx-auto">
+		<div
+			class="col-span-2 mx-auto inline-flex w-24 items-center justify-around gap-1 rounded-badge bg-accent px-2 py-1"
+		>
 			<span class="iconify size-7 mingcute--user-2-line"></span>
 			<p>
 				{shortNumber(course.vote_count)}

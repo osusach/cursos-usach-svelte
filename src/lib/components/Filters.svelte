@@ -10,7 +10,7 @@
 </script>
 
 
-<div class="mx-auto my-4 grid grid-flow-row justify-center gap-4 lg:grid-flow-col lg:gap-12">
+<div class="mx-auto my-4 grid grid-flow-row justify-center gap-4 sm:grid-flow-col sm:gap-12">
 	<button
 		class="btn btn-warning w-32"
 		on:click={() => {

@@ -23,7 +23,7 @@
 	$: array = updatePagination(page, array_length);
 </script>
 
-<div class="grid grid-flow-col gap-4">
+<div class="grid grid-flow-col gap-4 w-fit mx-auto">
 	<button
 		class={button_class}
 		on:click={() => {

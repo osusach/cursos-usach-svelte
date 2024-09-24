@@ -50,8 +50,8 @@
 			<span class="iconify svg-spinners--180-ring"></span>
 		</div>
 	{:else}
-		<div class="place-self-center lg:col-span-2">
-			<div id="buttonDiv"></div>
+		<div class="bg-secondary h-12 lg:col-span-2 inline-flex justify-center">
+			<div id="buttonDiv" class="p-1"></div>
 		</div>
 	{/if}
 {:else}

@@ -4,7 +4,7 @@
 	export let course: Course;
 	export let user: User;
 	export let comment: Comment;
-	export let sendComment: (parent_id: number) => void;
+	// export let sendComment: (parent_id: number) => void;
 	let content: string;
 	let parent_id: number = 1;
 	let sending_comment: boolean = false;
@@ -38,7 +38,7 @@
 				{comment.reply_count} respuestas
 			</p>
 		{/if}
-		<div class="grid grid-flow-col gap-2">
+		<!-- <div class="grid grid-flow-col gap-2">
 			<button
 				disabled={sending_vote}
 				class="btn btn-xs"
@@ -64,6 +64,6 @@
 				}}>+</button
 			>
 			<button class="btn btn-secondary btn-xs">Responder</button>
-		</div>
+		</div> -->
 	</div>
 </div>

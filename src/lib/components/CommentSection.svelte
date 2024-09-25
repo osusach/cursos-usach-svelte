@@ -12,7 +12,8 @@
 	let content: string;
 	let sending_comment: boolean = false;
 
-	async function sendComment(parent_id: number) {
+	async function sendComment(parent_id: number | null) {
+		if (parent_id == 1) parent_id = null;
 		sending_comment = true;
 		comments = await fetch('/api/comments', {
 			method: 'POST',

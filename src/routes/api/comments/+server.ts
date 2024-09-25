@@ -40,7 +40,8 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	await fetch(API_URL + '/courseComments', {
 		method: 'POST',
 		headers: {
-			Authorization: `${token}`
+			Authorization: `${token}`,
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
 			course_id,

@@ -1,5 +1,5 @@
 import { API_URL } from '$env/static/private';
-import type { Comment, Course, User } from '$lib/types';
+import { page_size } from '$lib';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({
 	can_vote: boolean;
 	session: User;
 	course: Course;
-	comments: Comment[];
+	getComments: (page: number) => Promise<any>;
 }> => {
 	const { id } = params;
 	const token = cookies.get('access-token');
@@ -44,17 +44,33 @@ export const load: PageServerLoad = async ({
 			console.error(e);
 		});
 
-	const { course, comments } = await fetch(`/api/courses?id=${id}`, {
-		method: 'GET',
-		headers: {
-			Authorization: `Bearer ${session?.token}`
-		}
-	}).then((response) => {
-		console.log(response);
+	const course = fetch(`/api/courses?id=${id}`)
+		.then((response) => {
+			console.log(response);
 
-		if (!response.ok) return { course: undefined, comments: undefined };
-		return response.json();
-	});
+			if (!response.ok) return { course: undefined };
+			return response.json();
+		})
+		.then((data) => data.course);
 
-	return { session, can_vote: await can_vote, course, comments };
+	const getComments = (page: number) => {
+		return fetch(
+			'/api/comments' +
+				new URLSearchParams({
+					course_id: id,
+					page: page.toString(),
+					page_size: page_size.toString()
+				}),
+			{
+				method: 'GET',
+				headers: { Authorization: `Bearer ${session?.token}`, 'Content-Type': 'application/json' }
+			}
+		)
+			.then((response) => {
+				if (!response.ok) return { comments: undefined };
+				return response.json();
+			})
+			.then((data) => data.comments);
+	};
+	return { session, can_vote: await can_vote, course: await course, getComments };
 };

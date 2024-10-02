@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { selectedCareer } from '$lib';
-	import type { Career } from '$lib/types';
 
 	export let careers: Career[] = [];
 	export let getCourses = () => {};
@@ -13,7 +12,7 @@
 	bind:value={$selectedCareer}
 	on:change={getCourses}
 >
-	<option value="0" disabled selected>Selecciona tu carrera</option>
+	<option value="" disabled selected>Selecciona tu carrera</option>
 	{#each careers as career}
 		<option value={career.id}>{career.id} - {career.name}</option>
 	{/each}

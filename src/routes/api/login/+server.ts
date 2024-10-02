@@ -23,6 +23,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		}
 		return response.json();
 	});
+	
 	console.log('=============user==================');
 	console.log(user);
 	if (user) {

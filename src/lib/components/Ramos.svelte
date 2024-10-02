@@ -1,11 +1,9 @@
 <script lang="ts">
-  import Filters from './Filters.svelte';
+	import Filters from './Filters.svelte';
 
 	import RamoComponent from './RamoComponent.svelte';
 
-	import { page_size, selectedCareer, selectedFaculty } from '$lib';
-
-	import type { Course } from '$lib/types';
+	import { page_size, selectedCareer, selectedFaculty, selectedFilter } from '$lib';
 
 	import PaginationController from './PaginationController.svelte';
 
@@ -21,6 +19,22 @@
 		if (search != '') {
 			let lower_search = search.toLowerCase();
 			filteredCourses = courses.filter((item) => item.name.toLowerCase().includes(lower_search));
+		}
+
+		switch ($selectedFilter) {
+			case 'difficulty':
+				courses = courses.sort((a, b) => {
+					return b.difficulty_mean - a.difficulty_mean;
+				});
+				break;
+
+			case 'time':
+				courses = courses.sort((a, b) => {
+					return b.time_demand_mean - a.time_demand_mean;
+				});
+				break;
+			default:
+				break;
 		}
 		array_length = filteredCourses.length;
 		page = 0;

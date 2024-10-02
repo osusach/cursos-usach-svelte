@@ -1,9 +1,6 @@
 <script lang="ts">
 
-	import { selectedCareer, selectedFaculty } from '$lib';
-
-	import type { Course } from '$lib/types';
-
+	import { selectedCareer, selectedFaculty, selectedFilter } from '$lib';
 
 	export let getCourses;
 	export let courses: Course[];
@@ -27,6 +24,7 @@
 			courses = courses.sort((a, b) => {
 				return b.difficulty_mean - a.difficulty_mean;
 			});
+			selectedFilter.set('difficulty')
 		}}>sort by difficulty</button
 	>
 	<button
@@ -35,6 +33,7 @@
 			courses = courses.sort((a, b) => {
 				return b.time_demand_mean - a.time_demand_mean;
 			});
+			selectedFilter.set('time')
 		}}>sort by time</button
 	>
 </div>

@@ -4,27 +4,19 @@
 	import WriteComment from './WriteComment.svelte';
 
 	import { page_size } from '$lib';
-	import type { Comment, Course, User } from '$lib/types';
+	import InfiniteScroll from 'svelte-infinite-scroll';
 
 	export let course: Course;
 	export let user: User;
-	export let comments: Comment[];
+	export let getComments: any;
+	let comments: CourseComment[] = [];
 	let content: string;
 	let sending_comment: boolean = false;
 
 	async function sendComment(parent_id: number | null) {
 		if (parent_id == 1) parent_id = null;
 		sending_comment = true;
-		comments = await fetch('/api/comments', {
-			method: 'POST',
-			headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' },
-			body: JSON.stringify({ content, course_id: course.id, parent_id })
-		})
-			.then((response) => {
-				if (!response.ok) return undefined;
-				return response.json();
-			})
-			.then((data) => data.comments);
+		comments = await getComments(page);
 		content = '';
 		sending_comment = false;
 	}
@@ -41,9 +33,14 @@
 	}}
 ></WriteComment>
 
-<PaginationController bind:page array_length={20} />
 <div class="flex flex-col gap-4 p-4">
-	{#each comments.slice(page * page_size, (page + 1) * page_size).toReversed() as comment}
+	{#each comments.toReversed() as comment}
 		<CommentComponent {comment} {course} {sendComment} {user}></CommentComponent>
 	{/each}
+	<InfiniteScroll
+		on:loadMore={async () => {
+			const newComments = await getComments(page);
+			comments = [...comments, newComments];
+		}}
+	/>
 </div>

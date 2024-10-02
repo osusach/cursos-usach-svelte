@@ -60,7 +60,7 @@
 	<span class="divider mb-8 mt-12 text-xl font-semibold">Comentarios</span>
 
 	{#if data.session}
-		<CommentSection user={data.session} course={data.course} bind:comments={data.comments} />
+		<CommentSection user={data.session} course={data.course} getComments={data.getComments} />
 	{:else}
 		<div class="alert m-4 mb-0 w-auto text-xl">
 			<span class="iconify size-12 text-warning mingcute--alert-fill"></span>

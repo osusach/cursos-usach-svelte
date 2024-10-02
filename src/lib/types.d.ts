@@ -32,8 +32,8 @@ type Career = {
 	id: number;
 	name: string;
 	faculty_id: number;
-	creation_date: Date;
-	modification_date: Date;
+	creation_date: string;
+	modification_date: string;
 };
 
 type User = {
@@ -41,7 +41,7 @@ type User = {
 	name: string;
 	token: string;
 };
-type Comment = {
+type CourseComment = {
 	id: number;
 	course_id: number;
 	user_id: number;
@@ -55,4 +55,3 @@ type Comment = {
 	user_name: string;
 	user_profile_img: string;
 };
-export { Faculty, Course, Career, User, Comment };

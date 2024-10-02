@@ -19,3 +19,19 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		})
 	});
 };
+
+export const DELETE: RequestHandler = async ({ request, fetch }) => {
+	const { comment_id } = await request.json();
+	const token = request.headers.get('Authorization');
+
+	return await fetch(API_URL + '/courseComments/vote', {
+		method: 'DELETE',
+		headers: {
+			Authorization: `${token}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			comment_id
+		})
+	});
+};

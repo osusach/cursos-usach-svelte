@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
-import type { Career, Course, Faculty } from './types';
 import { persisted } from 'svelte-persisted-store';
+
+export const selectedFilter = writable('none');
 
 export const selectedCourse = writable<Course>();
 export const selectedFaculty = persisted<string>('selectedFaculty', '');
@@ -15,7 +16,7 @@ export function range(size: number, startAt = 0) {
 
 export function shortNumber(value: number) {
 	return Intl.NumberFormat('en-US', {
-		notation: "compact",
+		notation: 'compact',
 		maximumFractionDigits: 1
-	  }).format(value);
+	}).format(value);
 }

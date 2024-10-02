@@ -5,7 +5,6 @@ import { page_size } from '$lib';
 
 export const GET: RequestHandler = async ({ request, url }) => {
 	const course_id = url.searchParams.get('id') ?? '';
-	const token = request.headers.get('Authorization') ?? '';
 
 	const course = fetch(API_URL + `/courses/${course_id}`)
 		.then((response) => {
@@ -16,32 +15,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
 			return data.course;
 		});
 
-	const comments = fetch(
-		API_URL +
-			'/courseComments?' +
-			new URLSearchParams({
-				course_id,
-				page: '0',
-				page_size: page_size.toString()
-			}).toString(),
-		{
-			method: 'GET',
-			headers: {
-				Authorization: `${token}`
-			}
-		}
-	)
-		.then((response) => {
-			if (!response.ok) {
-				return { comments: [] };
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data.comments;
-		});
-
-	return json({ course: await course, comments: await comments });
+	return json({ course: await course });
 };
 
 export const POST: RequestHandler = async ({ request }) => {

@@ -49,8 +49,8 @@
 		{#if !sendingVote}
 			<button
 				class="btn btn-success shadow-xl lg:col-span-2"
-				on:click={() => {
-					sendVote(difficulty, time);
+				on:click={async () => {
+					await sendVote(difficulty, time);
 					alert('VOTO ENVIADO');
 				}}>Enviar</button
 			>

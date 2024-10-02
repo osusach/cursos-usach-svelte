@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { Comment, Course, User } from '$lib/types';
-
 	export let course: Course;
 	export let user: User;
-	export let comment: Comment;
-	// export let sendComment: (parent_id: number) => void;
+	export let comment: CourseComment;
+	export let user_id: number = 0;
+	export let sendComment: (parent_id: number) => void;
 	let content: string;
 	let parent_id: number = 1;
 	let sending_comment: boolean = false;
@@ -19,6 +18,13 @@
 		});
 		sending_vote = false;
 		comment.upvotes += vote;
+	}
+	async function deleteComment(comment_id: number) {
+		await fetch('/api/comments/vote', {
+			method: 'DELETE',
+			headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' },
+			body: JSON.stringify({ comment_id: comment.id, course_id: course.id })
+		});
 	}
 </script>
 
@@ -38,7 +44,7 @@
 				{comment.reply_count} respuestas
 			</p>
 		{/if}
-		<!-- <div class="grid grid-flow-col gap-2">
+		<div class="grid w-14 grid-flow-col gap-2">
 			<button
 				disabled={sending_vote}
 				class="btn btn-xs"
@@ -64,6 +70,14 @@
 				}}>+</button
 			>
 			<button class="btn btn-secondary btn-xs">Responder</button>
-		</div> -->
+			{#if comment.user_id == user_id}
+				<button
+					class="btn btn-error btn-xs"
+					on:click={() => {
+						deleteComment(comment.id);
+					}}>Borrar comentario</button
+				>
+			{/if}
+		</div>
 	</div>
 </div>

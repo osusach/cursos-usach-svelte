@@ -1,5 +1,4 @@
 import type { PageServerLoad } from './$types';
-import type { Course, Faculty } from '$lib/types';
 import { API_URL } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
@@ -28,6 +27,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		.catch((e) => {
 			console.error(e);
 		});
+
 	const courses: Promise<Course[]> = fetch(API_URL + '/courses')
 		.then((response) => {
 			if (!response.ok) return { courses: [] };
